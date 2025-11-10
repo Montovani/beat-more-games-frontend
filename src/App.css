@@ -1,3 +1,33 @@
 body{
   margin: 0px;
 }
+.list-sidebar{
+  font-size: 17px;
+}
+.list-sidebar p{
+  font-size: 22px;
+  font-weight: 800;
+}
+.list-sidebar li{
+  list-style: none;
+  width: fit-content;
+  cursor: pointer;
+  margin-top: 5px;
+  padding-left: 12px;
+  padding-right: 10px ;
+  transition: background-color 0.4s;
+  border-radius: 10px;
+}
+.list-sidebar li:hover{
+  background-color: rgb(20, 20, 20);
+
+}
+.pages-navbar p {
+  cursor: pointer;
+  transition: background-color 0.4s;
+  border-radius: 10px;
+  padding: 0px 5px;
+}
+.pages-navbar p:hover{
+  background-color:#3a3b3b;
+}
