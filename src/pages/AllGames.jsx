@@ -1,7 +1,10 @@
+import AllGamesList from "../components/AllGamesList"
 
 function AllGames() {
   return (
-    <div>AllGames</div>
+    <>
+        <AllGamesList />
+    </>
   )
 }
 
