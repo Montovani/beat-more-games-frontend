@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import GameCard from "../components/GameCard";
+import PopUpAddGame from "../components/PopUpAddGame";
 
 function GameDetails() {
   const [gameDetails, setGameDetails] = useState(null);
   const [relatedGames, setRelatedGames] = useState(null);
   const { gameId } = useParams();
-    const navigate = useNavigate()
+  const [isAddedToList, setIsAddedToList] = useState(false);
+  const [isAskingToAdd, setIsAskingToAdd] = useState(false);
   useEffect(() => {
     getGameDetailsApi();
   }, [gameId]);
@@ -27,13 +29,16 @@ function GameDetails() {
       console.log(error);
     }
   };
+  const handleAddToListBtn = () => {
+    setIsAskingToAdd(true);
+  };
   const mainDivContainerStyle = {};
   const divAllGamesContainer = {
-      display:'flex',
-      gap: '40px',
-      flexWrap: 'wrap',
-      marginTop: '50px'
-    }
+    display: "flex",
+    gap: "40px",
+    flexWrap: "wrap",
+    marginTop: "50px",
+  };
   const heroDivStyle = {
     width: "100%",
     position: "absolute",
@@ -57,12 +62,23 @@ function GameDetails() {
   const ctaButton = {
     marginLeft: "10px",
     padding: "10px",
-    backgroundColor: "#be772b",
+    backgroundColor: "#be2b37",
     border: "none",
+    borderRadius: "10px",
+    fontFamily: "Poppins",
+    cursor: "pointer",
   };
-  console.log(gameDetails);
+
+  if (!gameDetails) {
+    return null;
+  }
   return (
-    gameDetails && (
+    <div>
+      {/* -- PopUp To Add to List -- */}
+      {isAskingToAdd && (
+        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd}/>
+      )}
+      {/* ---- Main Content ---- */}
       <div style={mainDivContainerStyle}>
         <section style={{ position: "relative" }}>
           <img
@@ -92,8 +108,9 @@ function GameDetails() {
               <button style={tagHeroStyle}>{gameDetails.genres[0].name}</button>
             </div>
             <div style={{ marginRight: "40px" }}>
-              <button style={ctaButton}>Wishlist</button>
-              <button style={ctaButton}>Finished</button>
+              <button onClick={handleAddToListBtn} style={ctaButton}>
+                Add Game to Dashboard
+              </button>
             </div>
           </div>
         </section>
@@ -114,7 +131,9 @@ function GameDetails() {
                 <p>Publishers</p>
                 {gameDetails.publishers.map((eachPublisher) => {
                   return (
-                    <p style={{ display: "inline" }}>{eachPublisher.name}, </p>
+                    <p key={eachPublisher.id} style={{ display: "inline" }}>
+                      {eachPublisher.name},{" "}
+                    </p>
                   );
                 })}
               </div>
@@ -122,7 +141,10 @@ function GameDetails() {
                 <p>Platforms</p>
                 {gameDetails.platforms.map((eachPlatform) => {
                   return (
-                    <p style={{ display: "inline" }}>
+                    <p
+                      key={eachPlatform.platform.id}
+                      style={{ display: "inline" }}
+                    >
                       {eachPlatform.platform.name},{" "}
                     </p>
                   );
@@ -136,26 +158,29 @@ function GameDetails() {
         </section>
         <h2>You might also like </h2>
         <div style={divAllGamesContainer}>
-        {relatedGames &&
-          relatedGames.map((eachGame) => {
-            return (
-              <div key={eachGame.id} onClick={()=> window.scrollTo({top:0,behavior:'smooth'})}>
-                <Link
-                  to={`/game-details/${eachGame.slug}/${eachGame.id}`}
+          {relatedGames &&
+            relatedGames.map((eachGame) => {
+              return (
+                <div
+                  key={eachGame.id}
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
                 >
-                  <GameCard
-                    gameName={eachGame.name}
-                    gameImg={eachGame.background_image}
-                    slug={eachGame.slug}
-                    gameApiId={eachGame.id}
-                  />
-                </Link>
-              </div>
-            );
-          })}
-         </div>
+                  <Link to={`/game-details/${eachGame.slug}/${eachGame.id}`}>
+                    <GameCard
+                      gameName={eachGame.name}
+                      gameImg={eachGame.background_image}
+                      slug={eachGame.slug}
+                      gameApiId={eachGame.id}
+                    />
+                  </Link>
+                </div>
+              );
+            })}
+        </div>
       </div>
-    )
+    </div>
   );
 }
 

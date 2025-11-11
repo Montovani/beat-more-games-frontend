@@ -13,7 +13,7 @@ function App() {
       gap:'20px'
   }
   const appContainerStyle = {
-        width: '76%',
+        width: '50%',
         margin: '30px auto',
     }
   return (
