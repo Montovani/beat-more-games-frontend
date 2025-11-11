@@ -1,5 +1,5 @@
 
-function GameCard({gameName,gameImg}) {
+function GameCard({gameName,gameImg,slug,gameApiId}) {
     
     const divCardStyle = {
         position: 'relative',

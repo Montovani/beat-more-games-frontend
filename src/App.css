@@ -94,3 +94,13 @@ a {
   cursor: pointer;
   transform: scale(1.1);
 }
+.game-details-section {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  
+}
+.game-details-section > div {
+  width: 48%;
+}

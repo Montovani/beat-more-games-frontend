@@ -3,6 +3,7 @@ import Search from './Search';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import GameCard from './GameCard';
+import { Link } from 'react-router-dom';
 
 function AllGamesList() {
     const divAllGamesContainer = {
@@ -20,10 +21,10 @@ function AllGamesList() {
 
         try {
            const response = await axios.get('https://api.rawg.io/api/games?key=cf1fb41b08d74a758d8a3034a0c3e973&page_size=20')
-           console.log(response.data.results)
+           
           
            const getOnlyNameAndImage = response.data.results.map((eachGame)=>{
-            const game = {name:eachGame.name,image:eachGame.background_image}
+            const game = {name:eachGame.name,image:eachGame.background_image, slug: eachGame.slug, gameApiId:eachGame.id}
             return game
            })
            setGamesList(getOnlyNameAndImage)
@@ -43,8 +44,14 @@ function AllGamesList() {
       <Search />
       <div style={divAllGamesContainer}>
       {gamesList && gamesList.map((eachGame)=>{
-        console.log(eachGame.image)
-        return <GameCard gameName={eachGame.name} gameImg={eachGame.image}/>
+       
+        return (
+        <div key={eachGame.gameApiId}>
+        <Link to={`/game-details/${eachGame.slug}/${eachGame.gameApiId}`}>
+            <GameCard  gameName={eachGame.name} gameImg={eachGame.image} slug={eachGame.slug} gameApiId={eachGame.gameApiId}/>
+        </Link>
+        </div>
+        )
       })}
       </div>
 
