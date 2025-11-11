@@ -2,8 +2,15 @@ import Button from '@mui/material/Button'
 import Search from './Search';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import GameCard from './GameCard';
 
 function AllGamesList() {
+    const divAllGamesContainer = {
+      display:'flex',
+      gap: '40px',
+      flexWrap: 'wrap',
+      marginTop: '50px'
+    }
     const [gamesList, setGamesList] = useState(null)
 
     useEffect(()=>{
@@ -34,9 +41,12 @@ function AllGamesList() {
         <h2 style={{ fontSize: "40px", fontFamily: "Poppins" }}>All Games</h2>
       </div>
       <Search />
+      <div style={divAllGamesContainer}>
       {gamesList && gamesList.map((eachGame)=>{
-        return <p>{eachGame.name}</p>
+        console.log(eachGame.image)
+        return <GameCard gameName={eachGame.name} gameImg={eachGame.image}/>
       })}
+      </div>
 
     </>
   );

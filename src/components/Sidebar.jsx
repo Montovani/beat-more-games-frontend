@@ -2,10 +2,10 @@ import LogoImg from "../assets/Images/beatmoregames_logo.png";
 
 function Sidebar() {
   const styleDivSidebar = {
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "#0f141b",
     borderRight: "1px solid #333",
     width: "200px",
-    height: "100vh",
+    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",

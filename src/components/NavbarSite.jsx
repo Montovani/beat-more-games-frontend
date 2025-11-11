@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import LogoImg from '../assets/Images/beatmoregames_logo.png'
 function NavbarSite() {
     const divNavStyle = {
-        backgroundColor: '#171717',
+        backgroundColor: '#010409',
         height: '65px',
         width: '100%',
         display: 'flex',
