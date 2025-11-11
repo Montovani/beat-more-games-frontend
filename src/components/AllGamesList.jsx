@@ -46,7 +46,7 @@ function AllGamesList() {
       {gamesList && gamesList.map((eachGame)=>{
        
         return (
-        <div key={eachGame.gameApiId}>
+        <div key={eachGame.gameApiId}onClick={()=> window.scrollTo({top:0,behavior:'smooth'})}>
         <Link to={`/game-details/${eachGame.slug}/${eachGame.gameApiId}`}>
             <GameCard  gameName={eachGame.name} gameImg={eachGame.image} slug={eachGame.slug} gameApiId={eachGame.gameApiId}/>
         </Link>
