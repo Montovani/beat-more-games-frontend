@@ -1,4 +1,58 @@
-function PopUpAddGame({setIsAskingToAdd}) {
+import axios from "axios"
+import { useState } from "react"
+
+function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
+    const [gameStatus,setGameStatus] = useState(null)
+    const [gameReview,setGameReview] = useState(null)
+    // const [gameObj, setGameObj] = useState({})
+
+    const handleGameStatusChange = (e)=>{
+        const status = e.target.value
+        setGameStatus(status)
+        
+    }
+    const handleGameReviewChange = (e)=>{
+        const review = e.target.value
+        setGameReview(review)
+    }
+    const handleAddGameToDashboard = (e)=>{
+        e.preventDefault()
+        const gameObj = {
+            idGameApi: gameDetails.id,
+            gameStatus: gameStatus,
+            gameReview: {
+                dateOfReview: new Date(),
+                review: gameReview
+            },
+            hoursPlayed: null,
+            startedDate: new Date(),
+            finishedDate: null,
+            platformPlayed: null,
+            gameInfo: {
+                name: gameDetails.name,
+                genre: gameDetails.genres[0].name,
+                image: gameDetails.background_image
+            },
+            isAddedToDashboard: true
+        
+        }
+        axios.post('http://localhost:5005/gamesAddedToList',gameObj)
+        .then(()=>{
+            console.log('game created')
+            setIsAskingToAdd(false)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
+    // const addGameToDatabase = async () => {
+    //     try {
+    //         const response = await axios.post(`http://localhost:5005/gamesAddedToList`)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+    
   return (
     <div
       style={{
@@ -51,7 +105,8 @@ function PopUpAddGame({setIsAskingToAdd}) {
           <form>
             <div>
               <label>Select Game Status </label>
-              <select>
+              <select onChange={handleGameStatusChange} value={gameStatus}>
+                <option value="-">-</option>
                 <option value="wishlist">Wishlist</option>
                 <option value="playing">Playing</option>
                 <option value="finished">Finished</option>
@@ -61,13 +116,15 @@ function PopUpAddGame({setIsAskingToAdd}) {
               <label>Game Review</label>
               <div>
                 <textarea
+                onChange={handleGameReviewChange}
                   style={{ width: "400px", height: "100px" }}
-                  name=""
-                  id=""
+                  name="gameReview"
+                  value={gameReview}
                 ></textarea>
               </div>
             </div>
             <button
+            onClick={handleAddGameToDashboard}
               style={{
                 backgroundColor: "#741047",
                 border: "none",

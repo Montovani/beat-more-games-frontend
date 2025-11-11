@@ -19,7 +19,6 @@ function GameDetails() {
       const response = await axios.get(
         `https://api.rawg.io/api/games/${gameId}?key=cf1fb41b08d74a758d8a3034a0c3e973`
       );
-      console.log(response.data.genres[0].name.toLowerCase());
       setGameDetails(response.data);
       const responseRealtedGames = await axios.get(
         `https://api.rawg.io/api/games?key=cf1fb41b08d74a758d8a3034a0c3e973&genres=${response.data.genres[0].name.toLowerCase()}&page_size=5`
@@ -76,7 +75,7 @@ function GameDetails() {
     <div>
       {/* -- PopUp To Add to List -- */}
       {isAskingToAdd && (
-        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd}/>
+        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd} gameDetails={gameDetails}/>
       )}
       {/* ---- Main Content ---- */}
       <div style={mainDivContainerStyle}>
