@@ -41,3 +41,66 @@ body{
 .footer-sidebar p:hover{
   background-color:rgb(20, 20, 20);
 }
+a {
+  all: unset;
+}
+.search-selector {
+  color:rgb(254, 255, 255);
+  margin-left: 8px;
+  padding: 10px;
+  font-family: 'Poppins';
+  font-size: 14px;
+  border-radius: 50px;
+  background-color: #006554;
+  border: 1px solid #006554;
+   cursor: pointer;
+
+}
+.search-selector-2 {
+  color:rgb(254, 255, 255);
+  margin-left: 8px;
+  padding: 10px;
+  font-family: 'Poppins';
+  font-size: 14px;
+  border-radius: 50px;
+  background-color: #e98537;
+  border: 1px solid #e98537;
+   cursor: pointer;
+
+}
+.search-selector-3 {
+  color:rgb(254, 255, 255);
+  margin-left: 8px;
+  padding: 10px;
+  font-family: 'Poppins';
+  font-size: 14px;
+  border-radius: 50px;
+  background-color: #9a4d76;
+  border: 1px solid #9a4d76;
+   cursor: pointer;
+
+}
+.search-btn {
+  margin-left: 40px;
+  background-color: #6b2643;
+  border: 1px solid #6b2643 ;
+  font-family: 'Poppins';
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+
+}
+.card-style:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.game-details-section {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  
+}
+.game-details-section > div {
+  width: 48%;
+}
