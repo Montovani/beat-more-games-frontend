@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 
-function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
+function PopUpAddGame({setIsAskingToAdd, gameDetails, setIsAddedToList}) {
     const [gameStatus,setGameStatus] = useState(null)
     const [gameReview,setGameReview] = useState(null)
   
@@ -43,6 +43,7 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
             setGameReview(null)
             setGameStatus(null)
             setIsAskingToAdd(false)
+            setIsAddedToList(true)
         })
         .catch((error)=>{
             console.log(error)

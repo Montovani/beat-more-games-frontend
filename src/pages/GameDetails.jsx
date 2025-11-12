@@ -11,6 +11,7 @@ function GameDetails() {
   const { gameId } = useParams();
   const [isAddedToList, setIsAddedToList] = useState(false);
   const [isAskingToAdd, setIsAskingToAdd] = useState(false);
+  const [gameStatus, setGameStatus] = useState(null)
   useEffect(() => {
     getGameDetailsApi();
   }, [gameId]);
@@ -25,9 +26,11 @@ function GameDetails() {
         `${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&genres=${response.data.genres[0].name.toLowerCase()}&page_size=5`
       );
       setRelatedGames(responseRealtedGames.data.results);
+      
       const responseGameInTheList = await axios.get(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList?idGameApi=${gameId}`)
       setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
       setGameInfoFromList(responseGameInTheList.data[0])
+      setGameStatus(responseGameInTheList.data[0].gameStatus)
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +85,15 @@ function GameDetails() {
     }
   }
 
+  const handleGameStatusChange = async(e)=>{
+    setGameStatus(e.target.value)
+    try {
+      await axios.patch(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`,{gameStatus: e.target.value})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   if (!gameDetails) {
     return null;
   }
@@ -89,7 +101,7 @@ function GameDetails() {
     <div>
       {/* -- PopUp To Add to List -- */}
       {isAskingToAdd && (
-        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd} gameDetails={gameDetails}/>
+        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd} gameDetails={gameDetails} setIsAddedToList={setIsAddedToList}/>
       )}
       {/* ---- Main Content ---- */}
       <div style={mainDivContainerStyle}>
@@ -124,8 +136,7 @@ function GameDetails() {
               {isAddedToList? (
                 <>
                 <label>Game Status</label>
-                <select>
-                <option value="-">-</option>
+                <select onChange={handleGameStatusChange} value={gameStatus}>
                 <option value="wishlist">Wishlist</option>
                 <option value="playing">Playing</option>
                 <option value="finished">Finished</option>

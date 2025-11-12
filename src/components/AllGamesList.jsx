@@ -41,7 +41,7 @@ function AllGamesList() {
         ></div>
         <h2 style={{ fontSize: "40px", fontFamily: "Poppins" }}>All Games</h2>
       </div>
-      <Search />
+      <Search gamesList={gamesList} setGamesList={setGamesList} />
       <div style={divAllGamesContainer}>
       {gamesList && gamesList.map((eachGame)=>{
        
