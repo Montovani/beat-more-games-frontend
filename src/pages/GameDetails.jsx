@@ -172,6 +172,9 @@ function GameDetails() {
                       gameImg={eachGame.background_image}
                       slug={eachGame.slug}
                       gameApiId={eachGame.id}
+                      width={'250'} 
+                      height={'300'}
+                      fontSize={'26'}
                     />
                   </Link>
                 </div>

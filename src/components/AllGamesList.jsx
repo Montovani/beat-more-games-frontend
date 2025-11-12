@@ -48,7 +48,7 @@ function AllGamesList() {
         return (
         <div key={eachGame.gameApiId}onClick={()=> window.scrollTo({top:0,behavior:'smooth'})}>
         <Link to={`/game-details/${eachGame.slug}/${eachGame.gameApiId}`}>
-            <GameCard  gameName={eachGame.name} gameImg={eachGame.image} slug={eachGame.slug} gameApiId={eachGame.gameApiId}/>
+            <GameCard  gameName={eachGame.name} gameImg={eachGame.image} slug={eachGame.slug} gameApiId={eachGame.gameApiId} width={'250'} height={'300'} fontSize={'26'}/>
         </Link>
         </div>
         )

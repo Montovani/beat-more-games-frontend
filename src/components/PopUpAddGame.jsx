@@ -31,7 +31,8 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
             gameInfo: {
                 name: gameDetails.name,
                 genre: gameDetails.genres[0].name,
-                image: gameDetails.background_image
+                image: gameDetails.background_image,
+                slug: gameDetails.slug,
             },
             isAddedToDashboard: true
         
@@ -39,6 +40,8 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
         axios.post(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList`,gameObj)
         .then(()=>{
             console.log('game created')
+            setGameReview(null)
+            setGameStatus(null)
             setIsAskingToAdd(false)
         })
         .catch((error)=>{
