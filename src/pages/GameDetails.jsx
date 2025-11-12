@@ -7,6 +7,7 @@ import PopUpAddGame from "../components/PopUpAddGame";
 function GameDetails() {
   const [gameDetails, setGameDetails] = useState(null);
   const [relatedGames, setRelatedGames] = useState(null);
+  const [gameInfoFromList, setGameInfoFromList] = useState(null)
   const { gameId } = useParams();
   const [isAddedToList, setIsAddedToList] = useState(false);
   const [isAskingToAdd, setIsAskingToAdd] = useState(false);
@@ -24,6 +25,9 @@ function GameDetails() {
         `${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&genres=${response.data.genres[0].name.toLowerCase()}&page_size=5`
       );
       setRelatedGames(responseRealtedGames.data.results);
+      const responseGameInTheList = await axios.get(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList?idGameApi=${gameId}`)
+      setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
+      setGameInfoFromList(responseGameInTheList.data[0])
     } catch (error) {
       console.log(error);
     }
@@ -68,6 +72,16 @@ function GameDetails() {
     cursor: "pointer",
   };
 
+  const handleRemoveGame = async()=>{
+    console.log('clicked')
+    try {
+      const request = await axios.delete(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`)
+      setIsAddedToList(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   if (!gameDetails) {
     return null;
   }
@@ -107,9 +121,21 @@ function GameDetails() {
               <button style={tagHeroStyle}>{gameDetails.genres[0].name}</button>
             </div>
             <div style={{ marginRight: "40px" }}>
-              <button onClick={handleAddToListBtn} style={ctaButton}>
+              {isAddedToList? (
+                <>
+                <label>Game Status</label>
+                <select>
+                <option value="-">-</option>
+                <option value="wishlist">Wishlist</option>
+                <option value="playing">Playing</option>
+                <option value="finished">Finished</option>
+                </select>
+                <button onClick={handleRemoveGame}>Delete Game From List</button>
+                </>
+                
+                ): (<button onClick={handleAddToListBtn} style={ctaButton}>
                 Add Game to Dashboard
-              </button>
+              </button>)}
             </div>
           </div>
         </section>
@@ -162,8 +188,9 @@ function GameDetails() {
               return (
                 <div
                   key={eachGame.id}
-                  onClick={() =>
+                  onClick={() => {
                     window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
                   }
                 >
                   <Link to={`/game-details/${eachGame.slug}/${eachGame.id}`}>
