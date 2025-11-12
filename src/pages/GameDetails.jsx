@@ -17,11 +17,11 @@ function GameDetails() {
   const getGameDetailsApi = async () => {
     try {
       const response = await axios.get(
-        `https://api.rawg.io/api/games/${gameId}?key=cf1fb41b08d74a758d8a3034a0c3e973`
+        `${import.meta.env.VITE_API_GAMES_SERVER_URL}/games/${gameId}?key=${import.meta.env.VITE_API_GAMES_KEY}`
       );
       setGameDetails(response.data);
       const responseRealtedGames = await axios.get(
-        `https://api.rawg.io/api/games?key=cf1fb41b08d74a758d8a3034a0c3e973&genres=${response.data.genres[0].name.toLowerCase()}&page_size=5`
+        `${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&genres=${response.data.genres[0].name.toLowerCase()}&page_size=5`
       );
       setRelatedGames(responseRealtedGames.data.results);
     } catch (error) {

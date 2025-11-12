@@ -4,7 +4,7 @@ import { useState } from "react"
 function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
     const [gameStatus,setGameStatus] = useState(null)
     const [gameReview,setGameReview] = useState(null)
-    // const [gameObj, setGameObj] = useState({})
+  
 
     const handleGameStatusChange = (e)=>{
         const status = e.target.value
@@ -25,7 +25,7 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
                 review: gameReview
             },
             hoursPlayed: null,
-            startedDate: new Date(),
+            startedDate: null,
             finishedDate: null,
             platformPlayed: null,
             gameInfo: {
@@ -36,7 +36,7 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
             isAddedToDashboard: true
         
         }
-        axios.post('http://localhost:5005/gamesAddedToList',gameObj)
+        axios.post(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList`,gameObj)
         .then(()=>{
             console.log('game created')
             setIsAskingToAdd(false)
@@ -45,13 +45,6 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
             console.log(error)
         })
     }
-    // const addGameToDatabase = async () => {
-    //     try {
-    //         const response = await axios.post(`http://localhost:5005/gamesAddedToList`)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
     
   return (
     <div
@@ -120,6 +113,7 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
                   style={{ width: "400px", height: "100px" }}
                   name="gameReview"
                   value={gameReview}
+                  // disabled={true}
                 ></textarea>
               </div>
             </div>

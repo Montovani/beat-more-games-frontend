@@ -20,7 +20,7 @@ function AllGamesList() {
     const getAllGamesFromApi = async () => {
 
         try {
-           const response = await axios.get('https://api.rawg.io/api/games?key=cf1fb41b08d74a758d8a3034a0c3e973&page_size=30')
+           const response = await axios.get(`${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&page_size=30`)
            
           
            const getOnlyNameAndImage = response.data.results.map((eachGame)=>{
