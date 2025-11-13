@@ -20,6 +20,7 @@ function Search({gamesList,setGamesList}) {
 
   const handleSearchInApi = async()=> {
     try {
+      setGamesList(null)
       const response = await axios.get(`${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&search=${search}`)
       
       const getOnlyEssentials = response.data.results.map((eachGame)=>{
@@ -34,6 +35,7 @@ function Search({gamesList,setGamesList}) {
   const handleRefreshSearch = async()=>{
     const search = ""
     setSearch(search)
+    setGamesList(null)
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&search=${search}`)
       
@@ -48,6 +50,7 @@ function Search({gamesList,setGamesList}) {
    
   }
 const handlePlatformChange = async(e)=>{
+  setGamesList(null)
   setGenre('Genre')
   setPublisher('Publisher')
   setSearch("")
@@ -74,6 +77,7 @@ const handlePlatformChange = async(e)=>{
   }
 }
 const handleGenreChange = async(e)=>{
+  setGamesList(null)
   setPublisher('Publisher')
   setPlatform('Platform')
   setSearch("")
@@ -94,6 +98,7 @@ const handleGenreChange = async(e)=>{
   }
 }
 const handlePublishersChange = async(e)=>{
+  setGamesList(null)
   setGenre('Genre')
   setPlatform('Platform')
   setSearch("")

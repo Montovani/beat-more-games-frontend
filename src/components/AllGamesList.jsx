@@ -4,21 +4,29 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import GameCard from './GameCard';
 import { Link } from 'react-router-dom';
+import { ClipLoader, PacmanLoader } from 'react-spinners';
 
+const divAllGamesContainer = {
+  display:'flex',
+  gap: '40px',
+  flexWrap: 'wrap',
+  marginTop: '50px'
+}
+
+const divLoadingApiStyle = {
+  display:'flex',
+  flexDirection: 'column',
+  alignItems:'center',
+  justifyContent:'center',
+  width:'500px'
+}
 function AllGamesList() {
-    const divAllGamesContainer = {
-      display:'flex',
-      gap: '40px',
-      flexWrap: 'wrap',
-      marginTop: '50px'
-    }
     const [gamesList, setGamesList] = useState(null)
 
     useEffect(()=>{
         getAllGamesFromApi()
     },[])
     const getAllGamesFromApi = async () => {
-
         try {
            const response = await axios.get(`${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&page_size=30`)
            
@@ -43,7 +51,19 @@ function AllGamesList() {
       </div>
       <Search gamesList={gamesList} setGamesList={setGamesList} />
       <div style={divAllGamesContainer}>
-      {gamesList && gamesList.map((eachGame)=>{
+      {!gamesList? (
+        <div style={divLoadingApiStyle}>
+          <PacmanLoader
+                
+                size={25}
+                color={"#bc1283"}
+                speedMultiplier={0.8}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+                />
+                <p>Loading</p>
+        </div>
+      ):gamesList && gamesList.map((eachGame)=>{
        
         return (
         <div key={eachGame.gameApiId}onClick={()=> window.scrollTo({top:0,behavior:'smooth'})}>
