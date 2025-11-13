@@ -3,7 +3,7 @@ import Search from './Search';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import GameCard from './GameCard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ClipLoader, PacmanLoader } from 'react-spinners';
 
 const divAllGamesContainer = {
@@ -21,7 +21,9 @@ const divLoadingApiStyle = {
   width:'500px'
 }
 function AllGamesList() {
+
     const [gamesList, setGamesList] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(()=>{
         getAllGamesFromApi()
@@ -38,6 +40,7 @@ function AllGamesList() {
            setGamesList(getOnlyNameAndImage)
            
         } catch (error) {
+            navigate('/api-error')
             console.log(error)
         }
     }

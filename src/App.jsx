@@ -7,6 +7,7 @@ import Homepage from "./pages/Homepage"
 import GameDetails from "./pages/GameDetails";
 import Profile from "./pages/Profile";
 import PageNotFound from "./pages/PageNotFound";
+import ApiError from "./pages/ApiError";
 
 function App() {
   const mainDivStyle = {
@@ -32,6 +33,7 @@ function App() {
               <Route path='/user/igu' element={<Profile/>}></Route>
               {/* Erros */}
               <Route path="*" element={<PageNotFound />}></Route>
+              <Route path='/api-error' element={<ApiError />}></Route>
           </Routes>
         </div>
       </div>

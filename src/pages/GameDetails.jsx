@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import GameCard from "../components/GameCard";
 import PopUpAddGame from "../components/PopUpAddGame";
-import { PacmanLoader } from "react-spinners";
 
 function GameDetails() {
   const [gameDetails, setGameDetails] = useState(null);
@@ -15,7 +14,7 @@ function GameDetails() {
   const [gameStatus, setGameStatus] = useState(null)
   useEffect(() => {
     getGameDetailsApi();
-  }, [gameId]);
+  }, [gameId, isAddedToList]);
 
   const getGameDetailsApi = async () => {
     try {
@@ -75,19 +74,15 @@ function GameDetails() {
     fontFamily: "Poppins",
     cursor: "pointer",
   };
-  const divLoadingApiStyle = {
-  display:'flex',
-  flexDirection: 'column',
-  alignItems:'center',
-  justifyContent:'center',
-  width:'500px'
-}
 
   const handleRemoveGame = async()=>{
     console.log('clicked')
+    console.log(gameInfoFromList.id)
     try {
       const request = await axios.delete(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`)
       setIsAddedToList(false)
+
+      console.log('game deleted')
     } catch (error) {
       console.log(error)
     }
@@ -101,21 +96,10 @@ function GameDetails() {
       console.log(error)
     }
   }
-  if (!gameDetails){
-        return (
-          <div style={divLoadingApiStyle}>
-                  <PacmanLoader
-                        
-                        size={18}
-                        color={"#bc1283"}
-                        speedMultiplier={0.8}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                        />
-                        <p>Loading</p>
-                </div>
-        )
-      }
+
+  if (!gameDetails) {
+    return null;
+  }
   return (
     <div>
       {/* -- PopUp To Add to List -- */}
@@ -123,7 +107,6 @@ function GameDetails() {
         <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd} gameDetails={gameDetails} setIsAddedToList={setIsAddedToList}/>
       )}
       {/* ---- Main Content ---- */}
-      
       <div style={mainDivContainerStyle}>
         <section style={{ position: "relative" }}>
           <img
@@ -214,22 +197,7 @@ function GameDetails() {
         </section>
         <h2>You might also like </h2>
         <div style={divAllGamesContainer}>
-          {!relatedGames? (
-            
-                <div style={divLoadingApiStyle}>
-                  <PacmanLoader
-                        
-                        size={18}
-                        color={"#bc1283"}
-                        speedMultiplier={0.8}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                        />
-                        <p>Loading</p>
-                </div>
-              
-             
-            ):relatedGames &&
+          {relatedGames &&
             relatedGames.map((eachGame) => {
               return (
                 <div
