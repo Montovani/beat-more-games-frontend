@@ -14,18 +14,20 @@ function Sidebar() {
   return (
     <div style={styleDivSidebar}>
       <div>
+        <Link to ='/all-games'>
         <p style={{ paddingLeft: "40px", fontSize: "25px", fontWeight: "800", cursor: 'pointer' }}>
           Home
         </p>
+        </Link>
 
         <ul className="list-sidebar">
           <p>Dashboard</p>
           <Link to='/user/igu'>
           <li>Profile</li>
           </Link>
-          <li>Games Finished</li>
+          {/* <li>Games Finished</li>
           <li>Wishlist</li>
-          <li>Recommended Games</li>
+          <li>Recommended Games</li> */}
         </ul>
         <ul className="list-sidebar">
           <p>Top Games</p>

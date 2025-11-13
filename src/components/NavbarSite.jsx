@@ -7,6 +7,12 @@ function NavbarSite() {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems:'center'
+    }
+    const pStyle = {
+        margin:'0',
+        fontSize:'20px',
+        padding:'0'
     }
   return (
     <>
@@ -17,9 +23,9 @@ function NavbarSite() {
                 </Link>
             </div>
             <div className='pages-navbar' style={{display:'flex',gap:'20px',marginRight:'15px',marginTop:'2px',fontSize:'18px',fontWeight:'400'}}>
-                <Link to ='/all-games'><p>Games To Play</p></Link>
-                <p>Your Games</p>
-                <p>Games Finished</p>
+                <Link to ='/all-games'><p style={pStyle}>Games To Play</p></Link>
+                <Link to ='/user/igu'><p style={pStyle}>Your Games</p></Link>
+                {/* <p style={pStyle}>Games Finished</p> */}
             </div>   
         </div>
     </>
