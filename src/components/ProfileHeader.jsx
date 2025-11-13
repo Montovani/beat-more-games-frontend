@@ -1,3 +1,5 @@
+import profileImg from "../assets/images/profile_image.png"
+
 function ProfileHeader() {
      const profileContainer = {
         display:'flex',
@@ -31,7 +33,7 @@ function ProfileHeader() {
         <div>
             <div style={profileCardStyle}>
                 <div style={imageProfileContainer}>
-                    <img style={imageProfileStyle} src="../src/assets/images/profile_image.png" alt="" />
+                    <img style={imageProfileStyle} src={profileImg} alt="" />
                 </div>
                 <div>
                     <h2 style={nameProfileStyle}>Igu</h2>

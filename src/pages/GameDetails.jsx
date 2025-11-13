@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import GameCard from "../components/GameCard";
 import PopUpAddGame from "../components/PopUpAddGame";
+import { PacmanLoader } from "react-spinners";
+import ReviewBox from "../components/ReviewBox";
 
 function GameDetails() {
   const [gameDetails, setGameDetails] = useState(null);
@@ -74,6 +76,16 @@ function GameDetails() {
     fontFamily: "Poppins",
     cursor: "pointer",
   };
+  const addNewReviewBtn = {
+    width:'150px',
+    height:'40px',
+    alignSelf:'center',
+    fontFamily: 'Poppins',
+    backgroundColor: '#8D4C08',
+    border:'none',
+    borderRadius:'15px',
+    cursor:'pointer'
+}
 
   const handleRemoveGame = async()=>{
     console.log('clicked')
@@ -87,6 +99,13 @@ function GameDetails() {
       console.log(error)
     }
   }
+  const divLoadingApiStyle = {
+  display:'flex',
+  flexDirection: 'column',
+  alignItems:'center',
+  justifyContent:'center',
+  width:'500px'
+}
 
   const handleGameStatusChange = async(e)=>{
     setGameStatus(e.target.value)
@@ -98,7 +117,19 @@ function GameDetails() {
   }
 
   if (!gameDetails) {
-    return null;
+    return (
+       <div style={divLoadingApiStyle}>
+                  <PacmanLoader
+                        
+                        size={18}
+                        color={"#bc1283"}
+                        speedMultiplier={0.8}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p>Loading</p>
+                </div>
+    )
   }
   return (
     <div>
@@ -193,6 +224,11 @@ function GameDetails() {
           </div>
           <div>
             <h4>Your Review:</h4>
+            {isAddedToList?(
+              <ReviewBox {...gameInfoFromList}  />
+            ):(
+              <button style={addNewReviewBtn}>Add a new Review</button>
+            )}
           </div>
         </section>
         <h2>You might also like </h2>
