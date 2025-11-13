@@ -33,6 +33,7 @@ function GameDetails() {
       setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
       setGameInfoFromList(responseGameInTheList.data[0])
       setGameStatus(responseGameInTheList.data[0].gameStatus)
+      console.log('got the game in the list: ',responseGameInTheList)
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +94,8 @@ function GameDetails() {
     try {
       const request = await axios.delete(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`)
       setIsAddedToList(false)
+      setGameInfoFromList(null)
+      setGameStatus(null)
 
       console.log('game deleted')
     } catch (error) {
@@ -224,10 +227,10 @@ function GameDetails() {
           </div>
           <div>
             <h4>Your Review:</h4>
-            {isAddedToList?(
+            {isAddedToList && gameInfoFromList?(
               <ReviewBox {...gameInfoFromList}  />
             ):(
-              <button style={addNewReviewBtn}>Add a new Review</button>
+              <button onClick={handleAddToListBtn} style={addNewReviewBtn}>Add a new Review</button>
             )}
           </div>
         </section>

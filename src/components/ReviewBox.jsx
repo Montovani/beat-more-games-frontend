@@ -48,9 +48,10 @@ const textAreaReviewStyle = {
 const pStyle = {};
 
 function ReviewBox(props) {
+    console.log(props)
     const [isEditingReview, setIsEditingReview] = useState(false)
     const [newGameReview, setNewGameReview] = useState(null)
-
+    const [localReview, setLocalReview] = useState(props.gameReview)
     const handleAddNewReviewToGameObj = async(e)=> {
         try {
             const newReview = newGameReview
@@ -58,14 +59,19 @@ function ReviewBox(props) {
             review: newReview
              }
              })
-             setNewGameReview(newReview)
+             setLocalReview({
+                    review: newGameReview,
+                    dateOfReview: new Date().toISOString(),
+                });
              setIsEditingReview(false)
+             setNewGameReview("")
+             
         } catch (error) {
             console.log(error)
         }
     }
-        console.log(newGameReview)
-    if(!props.gameReview.review){
+        console.log(localReview)
+    if(!props.gameReview.review && !isEditingReview){
         return <button onClick={()=>setIsEditingReview(true)} style={addNewReviewBtn}>Add a new Review</button>
     }
   return (
@@ -85,10 +91,10 @@ function ReviewBox(props) {
             <img style={imageProfileStyle} src={profileImg} alt="" />
           </div>
           <p>Igu</p>
-          <p>{props.gameReview.dateOfReview.slice(0,10)}:</p>
+          <p>{localReview.dateOfReview.slice(0,10)}:</p>
         </div>
         <p>
-          {props.gameReview.review}
+          {localReview.review}
         </p>
          <button onClick={()=>setIsEditingReview(true)} style={addNewReviewBtn}>Add a new Review</button> 
       </div>
