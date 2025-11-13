@@ -5,6 +5,7 @@ import axios from "axios";
 import GameCard from "../components/GameCard";
 import { Link } from "react-router-dom";
 import { ClipLoader, PacmanLoader } from "react-spinners";
+import LastReviews from "../components/LastReviews";
 
 
 
@@ -59,6 +60,7 @@ function Profile() {
     flexWrap: "wrap",
     gap: "10px",
     justifyContent: "center",
+    alignContent: 'flex-start'
   };
 
   const divLoadingApiStyle = {
@@ -70,7 +72,7 @@ function Profile() {
   }
   return (
     <>
-      <ProfileHeader />
+      <ProfileHeader userGamesObj={userGamesObj} />
       <div style={firstGamerStatusContainer}>
         <div style={{ width: "50%" }}>
           <div>
@@ -122,7 +124,10 @@ function Profile() {
           </div>
         </div>
         <div style={lastReviewsContainer}>
-          <SubtitleH2 text={"Last Reviews"} color={"#d72dbd"} fontSize={32} />
+          <SubtitleH2 text={"Latest Reviews"} color={"#d72dbd"} fontSize={32} />
+          {userGamesObj &&
+          <LastReviews userGamesObj={userGamesObj} />
+          }
         </div>
       </div>
       <SubtitleH2 text={"Games Dashboard"} color={"#50ab22"} fontSize={32} />

@@ -23,7 +23,7 @@ function NavbarSite() {
                 </Link>
             </div>
             <div className='pages-navbar' style={{display:'flex',gap:'20px',marginRight:'15px',marginTop:'2px',fontSize:'18px',fontWeight:'400'}}>
-                <Link to ='/all-games'><p style={pStyle}>Games To Play</p></Link>
+                <Link to ='/all-games'><p style={pStyle}>All Games</p></Link>
                 <Link to ='/user/igu'><p style={pStyle}>Your Games</p></Link>
                 {/* <p style={pStyle}>Games Finished</p> */}
             </div>   
