@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 
-function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
+function PopUpAddGame({setIsAskingToAdd, gameDetails, setIsAddedToList}) {
     const [gameStatus,setGameStatus] = useState(null)
     const [gameReview,setGameReview] = useState(null)
   
@@ -31,7 +31,8 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
             gameInfo: {
                 name: gameDetails.name,
                 genre: gameDetails.genres[0].name,
-                image: gameDetails.background_image
+                image: gameDetails.background_image,
+                slug: gameDetails.slug,
             },
             isAddedToDashboard: true
         
@@ -39,7 +40,10 @@ function PopUpAddGame({setIsAskingToAdd, gameDetails}) {
         axios.post(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList`,gameObj)
         .then(()=>{
             console.log('game created')
+            setGameReview(null)
+            setGameStatus(null)
             setIsAskingToAdd(false)
+            setIsAddedToList(true)
         })
         .catch((error)=>{
             console.log(error)

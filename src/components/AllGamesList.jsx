@@ -41,14 +41,14 @@ function AllGamesList() {
         ></div>
         <h2 style={{ fontSize: "40px", fontFamily: "Poppins" }}>All Games</h2>
       </div>
-      <Search />
+      <Search gamesList={gamesList} setGamesList={setGamesList} />
       <div style={divAllGamesContainer}>
       {gamesList && gamesList.map((eachGame)=>{
        
         return (
         <div key={eachGame.gameApiId}onClick={()=> window.scrollTo({top:0,behavior:'smooth'})}>
         <Link to={`/game-details/${eachGame.slug}/${eachGame.gameApiId}`}>
-            <GameCard  gameName={eachGame.name} gameImg={eachGame.image} slug={eachGame.slug} gameApiId={eachGame.gameApiId}/>
+            <GameCard  gameName={eachGame.name} gameImg={eachGame.image} slug={eachGame.slug} gameApiId={eachGame.gameApiId} width={'250'} height={'300'} fontSize={'26'}/>
         </Link>
         </div>
         )

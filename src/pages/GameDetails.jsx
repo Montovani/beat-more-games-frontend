@@ -7,9 +7,11 @@ import PopUpAddGame from "../components/PopUpAddGame";
 function GameDetails() {
   const [gameDetails, setGameDetails] = useState(null);
   const [relatedGames, setRelatedGames] = useState(null);
+  const [gameInfoFromList, setGameInfoFromList] = useState(null)
   const { gameId } = useParams();
   const [isAddedToList, setIsAddedToList] = useState(false);
   const [isAskingToAdd, setIsAskingToAdd] = useState(false);
+  const [gameStatus, setGameStatus] = useState(null)
   useEffect(() => {
     getGameDetailsApi();
   }, [gameId]);
@@ -24,6 +26,11 @@ function GameDetails() {
         `${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&genres=${response.data.genres[0].name.toLowerCase()}&page_size=5`
       );
       setRelatedGames(responseRealtedGames.data.results);
+      
+      const responseGameInTheList = await axios.get(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList?idGameApi=${gameId}`)
+      setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
+      setGameInfoFromList(responseGameInTheList.data[0])
+      setGameStatus(responseGameInTheList.data[0].gameStatus)
     } catch (error) {
       console.log(error);
     }
@@ -68,6 +75,25 @@ function GameDetails() {
     cursor: "pointer",
   };
 
+  const handleRemoveGame = async()=>{
+    console.log('clicked')
+    try {
+      const request = await axios.delete(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`)
+      setIsAddedToList(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleGameStatusChange = async(e)=>{
+    setGameStatus(e.target.value)
+    try {
+      await axios.patch(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`,{gameStatus: e.target.value})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   if (!gameDetails) {
     return null;
   }
@@ -75,7 +101,7 @@ function GameDetails() {
     <div>
       {/* -- PopUp To Add to List -- */}
       {isAskingToAdd && (
-        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd} gameDetails={gameDetails}/>
+        <PopUpAddGame setIsAskingToAdd={setIsAskingToAdd} gameDetails={gameDetails} setIsAddedToList={setIsAddedToList}/>
       )}
       {/* ---- Main Content ---- */}
       <div style={mainDivContainerStyle}>
@@ -107,9 +133,20 @@ function GameDetails() {
               <button style={tagHeroStyle}>{gameDetails.genres[0].name}</button>
             </div>
             <div style={{ marginRight: "40px" }}>
-              <button onClick={handleAddToListBtn} style={ctaButton}>
+              {isAddedToList? (
+                <>
+                <label>Game Status</label>
+                <select onChange={handleGameStatusChange} value={gameStatus}>
+                <option value="wishlist">Wishlist</option>
+                <option value="playing">Playing</option>
+                <option value="finished">Finished</option>
+                </select>
+                <button onClick={handleRemoveGame}>Delete Game From List</button>
+                </>
+                
+                ): (<button onClick={handleAddToListBtn} style={ctaButton}>
                 Add Game to Dashboard
-              </button>
+              </button>)}
             </div>
           </div>
         </section>
@@ -162,8 +199,9 @@ function GameDetails() {
               return (
                 <div
                   key={eachGame.id}
-                  onClick={() =>
+                  onClick={() => {
                     window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
                   }
                 >
                   <Link to={`/game-details/${eachGame.slug}/${eachGame.id}`}>
@@ -172,6 +210,9 @@ function GameDetails() {
                       gameImg={eachGame.background_image}
                       slug={eachGame.slug}
                       gameApiId={eachGame.id}
+                      width={'250'} 
+                      height={'300'}
+                      fontSize={'26'}
                     />
                   </Link>
                 </div>

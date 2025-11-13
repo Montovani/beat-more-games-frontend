@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import LogoImg from "../assets/Images/beatmoregames_logo.png";
 
 function Sidebar() {
@@ -19,7 +20,9 @@ function Sidebar() {
 
         <ul className="list-sidebar">
           <p>Dashboard</p>
+          <Link to='/user/igu'>
           <li>Profile</li>
+          </Link>
           <li>Games Finished</li>
           <li>Wishlist</li>
           <li>Recommended Games</li>

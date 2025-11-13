@@ -1,10 +1,10 @@
 
-function GameCard({gameName,gameImg,slug,gameApiId}) {
+function GameCard({gameName,gameImg,slug,gameApiId, width,height,fontSize}) {
     
     const divCardStyle = {
         position: 'relative',
-        width: '250px',
-        height: '300px',
+        width: `${width}px`,
+        height: `${height}px`,
         backgroundColor: 'black',
         borderRadius: '20px',
         overflow: 'hidden',
@@ -18,7 +18,7 @@ function GameCard({gameName,gameImg,slug,gameApiId}) {
     const cardH4Style = {
         position:'absolute',
         bottom: '-35px',
-        fontSize: '26px',
+        fontSize: `${fontSize}px`,
         padding: '8px',
         width:'100%',
         background: 'linear-gradient(to top, rgb(0, 0, 0), transparent)',
