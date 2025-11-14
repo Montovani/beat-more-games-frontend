@@ -1,4 +1,4 @@
-import profileImg from "../assets/images/profile_image.png"
+import profileImg from "../assets/Images/profile_image.png"
 
 const reviewMainContainer = {
   width: "90%",
