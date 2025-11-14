@@ -146,6 +146,15 @@ a {
   flex-wrap: wrap;
   gap: 5px;
 }
+.your-review-container {
+  margin-bottom: 90px;
+}
+.div-all-games-container{
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
 @media (max-width: 700px){
   .main-div-container-style{
     flex-direction: column-reverse;
@@ -179,6 +188,15 @@ a {
     gap: 0px;
   }
   .game-dashboard-container{
+    justify-content: center;
+  }
+  .game-details-section > div {
+    width: auto;
+  }
+  .div-all-games-container{
+    justify-content: center;
+  }
+  .game-details-section{
     justify-content: center;
   }
 }

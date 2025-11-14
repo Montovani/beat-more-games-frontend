@@ -225,7 +225,7 @@ function GameDetails() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="your-review-container">
             <h4>Your Review:</h4>
             {isAddedToList && gameInfoFromList?(
               <ReviewBox {...gameInfoFromList}  />
@@ -235,7 +235,7 @@ function GameDetails() {
           </div>
         </section>
         <h2>You might also like </h2>
-        <div style={divAllGamesContainer}>
+        <div className="div-all-games-container">
           {relatedGames &&
             relatedGames.map((eachGame) => {
               return (
