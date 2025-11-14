@@ -88,7 +88,7 @@ a {
   border-radius: 10px;
   cursor: pointer;
   height: 60px;
-  width: 50px;
+  width: auto;
 
 }
 .card-style:hover {

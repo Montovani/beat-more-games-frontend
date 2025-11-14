@@ -64,7 +64,8 @@ function ReviewBox(props) {
                     dateOfReview: new Date().toISOString(),
                 });
              setIsEditingReview(false)
-             setNewGameReview("")
+             setNewGameReview(newReview)
+             props.getGameDetailsServer()
              
         } catch (error) {
             console.log(error)

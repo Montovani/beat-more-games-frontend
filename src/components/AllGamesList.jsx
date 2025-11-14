@@ -30,7 +30,7 @@ function AllGamesList() {
     },[])
     const getAllGamesFromApi = async () => {
         try {
-           const response = await axios.get(`${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&page_size=30`)
+           const response = await axios.get(`${import.meta.env.VITE_API_GAMES_SERVER_URL}/games?key=${import.meta.env.VITE_API_GAMES_KEY}&page_size=40`)
            
           
            const getOnlyNameAndImage = response.data.results.map((eachGame)=>{
