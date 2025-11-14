@@ -1,5 +1,5 @@
 import { useState } from "react";
-import profileImg from "../assets/images/profile_image.png";
+import profileImg from "../assets/Images/profile_image.png";
 import axios from "axios";
 
 const reviewMainContainer = {
