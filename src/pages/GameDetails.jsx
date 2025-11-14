@@ -15,8 +15,25 @@ function GameDetails() {
   const [isAskingToAdd, setIsAskingToAdd] = useState(false);
   const [gameStatus, setGameStatus] = useState(null)
   useEffect(() => {
-    getGameDetailsApi();
+    getAllData();
   }, [gameId, isAddedToList]);
+
+  const getAllData = async ()=>{
+    await getGameDetailsApi()
+    await getGameDetailsServer()
+  }
+
+  const getGameDetailsServer = async()=>{
+    try {
+      const responseGameInTheList = await axios.get(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList?idGameApi=${gameId}`)
+      setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
+      setGameInfoFromList(responseGameInTheList.data[0])
+      setGameStatus(responseGameInTheList.data[0].gameStatus) // Maybe remove this state because we already get 
+      console.log('got the game in the list: ',responseGameInTheList)
+    } catch (error) {
+      console.log(error)
+    } 
+  }
 
   const getGameDetailsApi = async () => {
     try {
@@ -29,11 +46,7 @@ function GameDetails() {
       );
       setRelatedGames(responseRealtedGames.data.results);
       
-      const responseGameInTheList = await axios.get(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList?idGameApi=${gameId}`)
-      setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
-      setGameInfoFromList(responseGameInTheList.data[0])
-      setGameStatus(responseGameInTheList.data[0].gameStatus)
-      console.log('got the game in the list: ',responseGameInTheList)
+      
     } catch (error) {
       console.log(error);
     }
@@ -228,7 +241,7 @@ function GameDetails() {
           <div className="your-review-container">
             <h4>Your Review:</h4>
             {isAddedToList && gameInfoFromList?(
-              <ReviewBox {...gameInfoFromList}  />
+              <ReviewBox {...gameInfoFromList} getGameDetailsServer={getGameDetailsServer} />
             ):(
               <button onClick={handleAddToListBtn} style={addNewReviewBtn}>Add a new Review</button>
             )}
