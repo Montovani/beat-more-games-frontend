@@ -18,7 +18,7 @@ function NavbarSite() {
     <>
         <div style={divNavStyle}>
             <div style={{width:'100px', marginTop:'10px',marginLeft:'15px'}}>
-                <Link to='/'>
+                <Link to='/user/igu'>
                 <img style={{width:'100%',cursor:'pointer'}} src={LogoImg} alt="" />
                 </Link>
             </div>

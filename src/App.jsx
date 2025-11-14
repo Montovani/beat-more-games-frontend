@@ -8,6 +8,7 @@ import GameDetails from "./pages/GameDetails";
 import Profile from "./pages/Profile";
 import PageNotFound from "./pages/PageNotFound";
 import ApiError from "./pages/ApiError";
+import TopGamesCurrentYear from "./pages/TopGamesCurrentYear";
 
 function App() {
   const mainDivStyle = {
@@ -31,6 +32,7 @@ function App() {
               <Route path="/all-games" element={<AllGames />}></Route>
               <Route path='/game-details/:gameSlug/:gameId' element={<GameDetails />}></Route>
               <Route path='/user/igu' element={<Profile/>}></Route>
+              <Route path='/top-games-this-year' element={<TopGamesCurrentYear/>}></Route>
               {/* Erros */}
               <Route path="*" element={<PageNotFound />}></Route>
               <Route path='/api-error' element={<ApiError />}></Route>

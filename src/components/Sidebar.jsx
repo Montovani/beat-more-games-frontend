@@ -30,16 +30,7 @@ function Sidebar() {
           <li>Recommended Games</li> */}
         </ul>
         <ul className="list-sidebar">
-          <p>Top Games</p>
-          <li>Top This Year</li>
-          <li>Top 2024</li>
-        </ul>
-        <ul className="list-sidebar genre">
-          <p>Genres</p>
-          <li>Action</li>
-          <li>RPG</li>
-          <li>Roguelike</li>
-          <li>RTS</li>
+          <Link to ='/top-games-this-year'><p style={{cursor:'pointer'}}>Top Games</p></Link>
         </ul>
       </div>
       <div className="footer-sidebar">

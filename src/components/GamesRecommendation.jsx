@@ -79,7 +79,7 @@ function GamesRecommendation() {
   }
   return (
     <>
-      <SubtitleH2 text={"Games Recommendation"} color={"#F7D007"} fontSize={32}>
+      <SubtitleH2 text={"Recommended Games"} color={"#F7D007"} fontSize={32}>
       </SubtitleH2>
       <p>Games based in the Genres yous play!</p>
       <div className="div-all-games-container">
