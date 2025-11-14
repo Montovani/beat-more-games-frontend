@@ -4,6 +4,11 @@ import SubtitleH2 from "../components/SubtitleH2";
 import axios from "axios";
 import GameCard from "../components/GameCard";
 import { Link } from "react-router-dom";
+import { ClipLoader, PacmanLoader } from "react-spinners";
+import LastReviews from "../components/LastReviews";
+
+
+
 
 function Profile() {
   const [gamesFinishedThisYear, setGamesFinishedThisYear] = useState(null);
@@ -55,13 +60,21 @@ function Profile() {
     flexWrap: "wrap",
     gap: "10px",
     justifyContent: "center",
+    alignContent: 'flex-start'
   };
 
+  const divLoadingApiStyle = {
+  display:'flex',
+  flexDirection: 'column',
+  alignItems:'center',
+  justifyContent:'center',
+  width:'500px'
+  }
   return (
     <>
-      <ProfileHeader />
-      <div style={firstGamerStatusContainer}>
-        <div style={{ width: "50%" }}>
+      <ProfileHeader userGamesObj={userGamesObj} />
+      <div className="first-gamer-status-container">
+        <div className="games-finished-container">
           <div>
             <SubtitleH2
               text={"Games Finished This Year"}
@@ -69,8 +82,23 @@ function Profile() {
               fontSize={32}
             ></SubtitleH2>
           </div>
-          <div style={GamesFinihedThisYearContainer}>
-            {userGamesObj &&
+          <div className="game-finished-this-year-container">
+            {!userGamesObj? (
+            
+                <div style={divLoadingApiStyle}>
+                  <PacmanLoader
+                        
+                        size={18}
+                        color={"#bc1283"}
+                        speedMultiplier={0.8}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p>Loading</p>
+                </div>
+              
+             
+            ): userGamesObj &&
               userGamesObj
                 .filter((eachGame) => {
                   return eachGame.gameStatus === "finished";
@@ -96,15 +124,33 @@ function Profile() {
           </div>
         </div>
         <div style={lastReviewsContainer}>
-          <SubtitleH2 text={"Last Reviews"} color={"#d72dbd"} fontSize={32} />
+          <SubtitleH2 text={"Latest Reviews"} color={"#d72dbd"} fontSize={32} />
+          {userGamesObj &&
+          <LastReviews userGamesObj={userGamesObj} />
+          }
         </div>
       </div>
       <SubtitleH2 text={"Games Dashboard"} color={"#50ab22"} fontSize={32} />
-      <div style={gameDashboardContainer}>
+      <div className="game-dashboard-container">
         <div>
           <h2 style={{ textAlign: "center" }}>Wishlist</h2>
           <div style={gameListContainer}>
-            {userGamesObj &&
+            {!userGamesObj? (
+            
+                <div style={divLoadingApiStyle}>
+                  <PacmanLoader
+                        
+                        size={18}
+                        color={"#bc1283"}
+                        speedMultiplier={0.8}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p>Loading</p>
+                </div>
+              
+             
+            ):userGamesObj &&
               userGamesObj
                 .filter((eachGame) => {
                   return eachGame.gameStatus === "wishlist";
@@ -138,7 +184,22 @@ function Profile() {
         <div>
           <h2 style={{ textAlign: "center" }}>Playing</h2>
           <div style={gameListContainer}>
-            {userGamesObj &&
+            {!userGamesObj? (
+            
+                <div style={divLoadingApiStyle}>
+                  <PacmanLoader
+                        
+                        size={18}
+                        color={"#bc1283"}
+                        speedMultiplier={0.8}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p>Loading</p>
+                </div>
+              
+             
+            ):userGamesObj &&
               userGamesObj
                 .filter((eachGame) => {
                   return eachGame.gameStatus === "playing";
@@ -173,7 +234,22 @@ function Profile() {
         <div>
           <h2 style={{ textAlign: "center" }}>Finished</h2>
           <div style={gameListContainer}>
-            {userGamesObj &&
+            {!userGamesObj? (
+            
+                <div style={divLoadingApiStyle}>
+                  <PacmanLoader
+                        
+                        size={18}
+                        color={"#bc1283"}
+                        speedMultiplier={0.8}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p>Loading</p>
+                </div>
+              
+             
+            ):userGamesObj &&
               userGamesObj
                 .filter((eachGame) => {
                   return eachGame.gameStatus === "finished";

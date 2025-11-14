@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import GameCard from "../components/GameCard";
 import PopUpAddGame from "../components/PopUpAddGame";
+import { PacmanLoader } from "react-spinners";
+import ReviewBox from "../components/ReviewBox";
 
 function GameDetails() {
   const [gameDetails, setGameDetails] = useState(null);
@@ -14,7 +16,7 @@ function GameDetails() {
   const [gameStatus, setGameStatus] = useState(null)
   useEffect(() => {
     getGameDetailsApi();
-  }, [gameId]);
+  }, [gameId, isAddedToList]);
 
   const getGameDetailsApi = async () => {
     try {
@@ -31,6 +33,7 @@ function GameDetails() {
       setIsAddedToList(responseGameInTheList.data[0].isAddedToDashboard)
       setGameInfoFromList(responseGameInTheList.data[0])
       setGameStatus(responseGameInTheList.data[0].gameStatus)
+      console.log('got the game in the list: ',responseGameInTheList)
     } catch (error) {
       console.log(error);
     }
@@ -74,16 +77,38 @@ function GameDetails() {
     fontFamily: "Poppins",
     cursor: "pointer",
   };
+  const addNewReviewBtn = {
+    width:'150px',
+    height:'40px',
+    alignSelf:'center',
+    fontFamily: 'Poppins',
+    backgroundColor: '#8D4C08',
+    border:'none',
+    borderRadius:'15px',
+    cursor:'pointer'
+}
 
   const handleRemoveGame = async()=>{
     console.log('clicked')
+    console.log(gameInfoFromList.id)
     try {
       const request = await axios.delete(`${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${gameInfoFromList.id}`)
       setIsAddedToList(false)
+      setGameInfoFromList(null)
+      setGameStatus(null)
+
+      console.log('game deleted')
     } catch (error) {
       console.log(error)
     }
   }
+  const divLoadingApiStyle = {
+  display:'flex',
+  flexDirection: 'column',
+  alignItems:'center',
+  justifyContent:'center',
+  width:'500px'
+}
 
   const handleGameStatusChange = async(e)=>{
     setGameStatus(e.target.value)
@@ -95,7 +120,19 @@ function GameDetails() {
   }
 
   if (!gameDetails) {
-    return null;
+    return (
+       <div style={divLoadingApiStyle}>
+                  <PacmanLoader
+                        
+                        size={18}
+                        color={"#bc1283"}
+                        speedMultiplier={0.8}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p>Loading</p>
+                </div>
+    )
   }
   return (
     <div>
@@ -188,12 +225,17 @@ function GameDetails() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="your-review-container">
             <h4>Your Review:</h4>
+            {isAddedToList && gameInfoFromList?(
+              <ReviewBox {...gameInfoFromList}  />
+            ):(
+              <button onClick={handleAddToListBtn} style={addNewReviewBtn}>Add a new Review</button>
+            )}
           </div>
         </section>
         <h2>You might also like </h2>
-        <div style={divAllGamesContainer}>
+        <div className="div-all-games-container">
           {relatedGames &&
             relatedGames.map((eachGame) => {
               return (
