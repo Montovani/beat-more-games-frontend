@@ -12,8 +12,8 @@ function Sidebar() {
     justifyContent: "space-between",
   };
   return (
-    <div style={styleDivSidebar}>
-      <div>
+    <div className="sidebar-container-style">
+      <div className="menu-elements">
         <Link to ='/all-games'>
         <p style={{ paddingLeft: "40px", fontSize: "25px", fontWeight: "800", cursor: 'pointer' }}>
           Home
@@ -42,7 +42,7 @@ function Sidebar() {
           <li>RTS</li>
         </ul>
       </div>
-      <div className="footer-sidebar" style={{paddingTop: '10px',borderTop: '1px solid #333',display:'flex',flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+      <div className="footer-sidebar">
         <img style={{ width: "38%" }} src={LogoImg} alt="" />
         <p>About us</p>
         <p>Github Project</p>

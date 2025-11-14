@@ -73,8 +73,8 @@ function Profile() {
   return (
     <>
       <ProfileHeader userGamesObj={userGamesObj} />
-      <div style={firstGamerStatusContainer}>
-        <div style={{ width: "50%" }}>
+      <div className="first-gamer-status-container">
+        <div className="games-finished-container">
           <div>
             <SubtitleH2
               text={"Games Finished This Year"}
@@ -82,7 +82,7 @@ function Profile() {
               fontSize={32}
             ></SubtitleH2>
           </div>
-          <div style={GamesFinihedThisYearContainer}>
+          <div className="game-finished-this-year-container">
             {!userGamesObj? (
             
                 <div style={divLoadingApiStyle}>
@@ -131,7 +131,7 @@ function Profile() {
         </div>
       </div>
       <SubtitleH2 text={"Games Dashboard"} color={"#50ab22"} fontSize={32} />
-      <div style={gameDashboardContainer}>
+      <div className="game-dashboard-container">
         <div>
           <h2 style={{ textAlign: "center" }}>Wishlist</h2>
           <div style={gameListContainer}>

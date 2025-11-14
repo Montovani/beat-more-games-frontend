@@ -27,6 +27,10 @@ function ProfileHeader({ userGamesObj }) {
     fontSize: "50px",
     margin: "0",
   };
+  console.log(userGamesObj)
+  if (!userGamesObj){
+    return null
+  }
   return (
     userGamesObj && (
       <div style={profileContainer}>

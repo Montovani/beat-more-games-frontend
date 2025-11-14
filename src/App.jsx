@@ -22,9 +22,9 @@ function App() {
   return (
     <>
       <NavbarSite />
-      <div style={mainDivStyle}>
+      <div className="main-div-container-style" style={mainDivStyle}>
         <Sidebar />
-        <div style={appContainerStyle}>
+        <div className="app-container-main-style">
           <Routes>
               <Route path="/" element={<Homepage/>}></Route>
               <Route path="/all-games" element={<AllGames />}></Route>
