@@ -146,6 +146,22 @@ a {
   flex-wrap: wrap;
   gap: 5px;
 }
+.game-drop-zone {
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.game-drop-zone.is-drag-over {
+  border-color: #50ab22;
+  background-color: rgba(80, 171, 34, 0.12);
+}
+
+.game-drag-card {
+  cursor: grab;
+}
+
+.game-drag-card:active {
+  cursor: grabbing;
+}
 .your-review-container {
   margin-bottom: 90px;
 }
