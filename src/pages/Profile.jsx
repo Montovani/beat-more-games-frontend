@@ -13,6 +13,7 @@ import LastReviews from "../components/LastReviews";
 function Profile() {
   const [gamesFinishedThisYear, setGamesFinishedThisYear] = useState(null);
   const [userGamesObj, setUserGamesObj] = useState(null);
+  const [dragOverStatus, setDragOverStatus] = useState(null);
 
   useEffect(() => {
     getUserData();
@@ -70,6 +71,53 @@ function Profile() {
   justifyContent:'center',
   width:'500px'
   }
+  const handleDragStart = (event, gameId) => {
+    event.dataTransfer.setData("text/plain", gameId);
+    event.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (event, status) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+    setDragOverStatus(status);
+  };
+
+  const handleDragLeave = (status) => {
+    if (dragOverStatus === status) {
+      setDragOverStatus(null);
+    }
+  };
+
+  const handleDrop = async (event, status) => {
+    event.preventDefault();
+    const draggedId = event.dataTransfer.getData("text/plain");
+    setDragOverStatus(null);
+
+    if (!draggedId) return;
+
+    const currentGame = userGamesObj?.find(
+      (game) => String(game.id) === String(draggedId)
+    );
+
+    if (!currentGame || currentGame.gameStatus === status) return;
+
+    setUserGamesObj((prevState) =>
+      prevState?.map((game) =>
+        game.id === currentGame.id ? { ...game, gameStatus: status } : game
+      )
+    );
+
+    try {
+      await axios.patch(
+        `${import.meta.env.VITE_JSON_SERVER_URL}/gamesAddedToList/${currentGame.id}`,
+        { gameStatus: status }
+      );
+    } catch (error) {
+      console.log(error);
+      getUserData();
+    }
+  };
+
   return (
     <>
       <ProfileHeader userGamesObj={userGamesObj} />
@@ -134,7 +182,15 @@ function Profile() {
       <div className="game-dashboard-container">
         <div>
           <h2 style={{ textAlign: "center" }}>Wishlist</h2>
-          <div style={gameListContainer}>
+          <div
+            className={`game-drop-zone ${
+              dragOverStatus === "wishlist" ? "is-drag-over" : ""
+            }`}
+            style={gameListContainer}
+            onDragOver={(event) => handleDragOver(event, "wishlist")}
+            onDragLeave={() => handleDragLeave("wishlist")}
+            onDrop={(event) => handleDrop(event, "wishlist")}
+          >
             {!userGamesObj? (
             
                 <div style={divLoadingApiStyle}>
@@ -162,6 +218,9 @@ function Profile() {
                       onClick={() =>
                         window.scrollTo({ top: 0, behavior: "smooth" })
                       }
+                      className="game-drag-card"
+                      draggable
+                      onDragStart={(event) => handleDragStart(event, eachGame.id)}
                     >
                       <Link
                         to={`/game-details/${eachGame.gameInfo.slug}/${eachGame.idGameApi}`}
@@ -183,7 +242,15 @@ function Profile() {
         </div>
         <div>
           <h2 style={{ textAlign: "center" }}>Playing</h2>
-          <div style={gameListContainer}>
+          <div
+            className={`game-drop-zone ${
+              dragOverStatus === "playing" ? "is-drag-over" : ""
+            }`}
+            style={gameListContainer}
+            onDragOver={(event) => handleDragOver(event, "playing")}
+            onDragLeave={() => handleDragLeave("playing")}
+            onDrop={(event) => handleDrop(event, "playing")}
+          >
             {!userGamesObj? (
             
                 <div style={divLoadingApiStyle}>
@@ -211,6 +278,9 @@ function Profile() {
                       onClick={() =>
                         window.scrollTo({ top: 0, behavior: "smooth" })
                       }
+                      className="game-drag-card"
+                      draggable
+                      onDragStart={(event) => handleDragStart(event, eachGame.id)}
                     >
                       <Link
                         to={`/game-details/${eachGame.gameInfo.slug}/${eachGame.idGameApi}`}
@@ -233,7 +303,15 @@ function Profile() {
         </div>
         <div>
           <h2 style={{ textAlign: "center" }}>Finished</h2>
-          <div style={gameListContainer}>
+          <div
+            className={`game-drop-zone ${
+              dragOverStatus === "finished" ? "is-drag-over" : ""
+            }`}
+            style={gameListContainer}
+            onDragOver={(event) => handleDragOver(event, "finished")}
+            onDragLeave={() => handleDragLeave("finished")}
+            onDrop={(event) => handleDrop(event, "finished")}
+          >
             {!userGamesObj? (
             
                 <div style={divLoadingApiStyle}>
@@ -261,6 +339,9 @@ function Profile() {
                       onClick={() =>
                         window.scrollTo({ top: 0, behavior: "smooth" })
                       }
+                      className="game-drag-card"
+                      draggable
+                      onDragStart={(event) => handleDragStart(event, eachGame.id)}
                     >
                       <Link
                         to={`/game-details/${eachGame.gameInfo.slug}/${eachGame.idGameApi}`}
